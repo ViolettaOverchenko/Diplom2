@@ -1,0 +1,87 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Нижний край поля по высоте нижнего колонтитула (высота футера)*/
+  margin-bottom: 60px;
+  background-color: #f7f7f7;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Устанавливаем фиксированную высоту футера */
+  height: 60px;
+  line-height: 60px; /* Вертикально центрируем текст футера */
+  background-color: #333333;
+  text-align: center;
+}
+
+h1 {
+  padding: 3rem 1.5rem;
+}
+
+.nav-item {
+  margin-right: 10px;
+}
+
+.table {
+  margin-top: 50px;
+}
+
+/*
+ * Cover
+ */
+.cover {
+  padding: 0 1.5rem;
+}
+.cover .btn-lg {
+  padding: .75rem 1.25rem;
+  font-weight: 700;
+}
+
+.mycol-sm-6 {
+  padding:  20px;
+}
+
+
+p#first {
+cursor: pointer;
+line-height: 13px;
+text-indent: 22px;
+line-height: 33px;
+border: 1px solid #d2d2d2;
+font-size: 18px;
+}
+
+p#first_yelloy {
+cursor: pointer;
+font-size: 18px;
+text-indent: 22px;
+line-height: 33px;
+border: 1PX SOLID #d2d2d2;
+}
+
+p#first2 {
+cursor: pointer;
+line-height: 13px;
+text-indent: 22px;
+line-height: 33px;
+border: 1px solid #d2d2d2;
+font-size: 18px;
+}
+
+p#first_yelloy2 {
+cursor: pointer;
+font-size: 18px;
+text-indent: 22px;
+line-height: 33px;
+border: 1PX SOLID #d2d2d2;
+}
+
+#result {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}

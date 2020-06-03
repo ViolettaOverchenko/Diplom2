@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load static %}
+  <div class="container text-center">
+    {{document.name_document}}
+
+    {% for theme in document.theme.all %}
+      {{theme.name_theme}}
+    {% endfor %}
+  </div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1 align="center">Авторизация</h1>
+<form class="form-signin text-center" method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  {% load static %}
+  <img class="mb-4" src="{% static 'analysis/images/img_avatar.png' %}" alt="" width="72" height="72">
+  <label for="inputUsername" class="sr-only">Логин</label>
+  <input type="text" id="inputUsername" class="form-control" placeholder="Логин" name="username" required autofocus>
+  <label for="inputPassword" class="sr-only">Пароль</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" name="password" required>
+  <input class="btn btn-lg btn-secondary btn-block" type="submit" value="Войти">
+  <input type="hidden" name="next" value="{{ next }}" />
+  <a href="{% url 'password_reset' %}">Забыли пароль?</a><br>
+  <a href="">Создать аккаунт</a>
+</form>
+{% endblock %}

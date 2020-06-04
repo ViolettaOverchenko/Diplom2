@@ -45,15 +45,15 @@
                 {{ user.get_username }}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'logout' %}?next={{request.path}}">Выход</a>
+                <a class="dropdown-item" href="{% url 'account_logout' %}">Выход</a>
               </div>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="btn btn-secondary" id="btn_registration" href="" role="button">Регистрация</a>
+              <a class="btn btn-secondary" id="btn_registration" href="{% url 'account_signup' %}" role="button">Регистрация</a>
             </li>
             <li class="nav-item">
-              <a class="btn btn-secondary" href="{% url 'login' %}?next={{request.path}}" role="button">Вход</a>
+              <a class="btn btn-secondary" href="{% url 'account_login' %}" role="button">Вход</a>
             </li>
           {% endif %}
         </ul>

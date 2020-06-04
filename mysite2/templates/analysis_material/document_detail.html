@@ -5,7 +5,7 @@
   <div class="container text-center">
     {{document.name_document}}
 
-    {% for theme in document.theme.all %}
+    {% for theme in document.theme_set.all %}
       {{theme.name_theme}}
     {% endfor %}
   </div>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic.base import View
+from django.views.generic import View, ListView, DetailView
 
 from .models import Document
 
@@ -8,14 +8,22 @@ class AnalysisMaterialViews(View):
     def get(self, request):
         return render(request, "analysis_material/home.html")
 
-class PersonalAccountViews(View):
+class PersonalAccountViews(ListView):
     """ Личный кабинет: список документов, список анализов """
-    def get(self, request):
-        documents = Document.objects.all()
-        return render(request, "analysis_material/personal_account.html", {"document_list": documents})
+    model = Document
+    template_name = "analysis_material/personal_account.html"
 
-class DocumentDetailViews(View):
+    def get_queryset(self):
+        return Document.objects.filter(user=self.request.user)
+
+    """def get(self, request):
+        documents = Document.objects.all()
+        return render(request, "analysis_material/personal_account.html", {"document_list": documents})"""
+
+class DocumentDetailViews(DetailView):
     """ Подробная информация о документе """
-    def get(self, request, pk):
-        document = Document.objects.get(id = pk)
-        return render(request, "analysis_material/document_detail.html", {"document": document})
+    model = Document
+    slug_field = "slug"
+    """def get(self, request, slug):
+        document = Document.objects.get(slug = slug)
+        return render(request, "analysis_material/document_detail.html", {"document": document})"""

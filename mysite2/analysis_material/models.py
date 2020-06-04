@@ -7,12 +7,13 @@ class Document(models.Model):
     name_document = models.CharField("Учебный материал", max_length=200)
     path_file = models.FileField("Файл", upload_to='documents/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField(max_length=250, unique=True)
 
     def __str__(self):
         return self.name_document
 
     def get_absolute_url(self):
-        return reverse("document_list", kwargs={"pk: self.pk"})
+        return reverse("document_detail", kwargs={"slug": self.slug})
 
     class Meta:
         verbose_name = "Учебный материал"

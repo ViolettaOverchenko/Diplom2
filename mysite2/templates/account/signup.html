@@ -5,17 +5,24 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Up" %}</h1>
 
-<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
-
-<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
-
+<h1 align="center">Регистрация</h1>
+  <form class="form-signin text-center" method="post" action="{% url 'account_signup' %}">
+    {% csrf_token %}
+    {% load static %}
+    <img class="mb-4" src="{% static 'analysis/images/img_avatar.png' %}" alt="" width="72" height="72">
+    <label for="inputUsername" class="sr-only">Логин</label>
+    <input type="text" id="inputUsername" class="form-control" placeholder="Логин" name="username" required autofocus>
+    <label for="inputEmail" class="sr-only">Email</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email" name="email" required>
+    <label for="inputPassword1" class="sr-only">Пароль</label>
+    <input type="password" id="inputPassword1" class="form-control" placeholder="Пароль" name="password1" required>
+    <label for="inputPassword2" class="sr-only">Повторите пароль</label>
+    <input type="password" id="inputPassword2" class="form-control" placeholder="Повторите пароль" name="password2" required>
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <input class="btn btn-lg btn-secondary btn-block" type="submit" value="Регистрация">
+    <a href="{{ login_url }}">Уже есть аккаунт?</a>
+  </form>
 {% endblock %}

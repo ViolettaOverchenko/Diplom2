@@ -6,8 +6,7 @@
 
 {% block content %}
 
-<h1>{% trans "Sign In" %}</h1>
-
+<!--
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
@@ -40,6 +39,24 @@ for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
   {% endif %}
   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
   <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+</form>-->
+
+
+<h1 align="center">Авторизация</h1>
+<form class="login form-signin text-center" method="post" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {% load static %}
+  <img class="mb-4" src="{% static 'analysis_material/images/img_avatar.png' %}" alt="" width="72" height="72">
+  <label for="inputUsername" class="sr-only">Логин</label>
+  <input type="text" id="inputUsername" class="form-control" placeholder="Логин" name="login" required autofocus>
+  <label for="inputPassword" class="sr-only">Пароль</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" name="password" required>
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <input class="btn btn-lg btn-secondary btn-block" type="submit" value="Войти">
+  <a href="{% url 'account_reset_password' %}">Забыли пароль?</a><br>
+  <a href="{{ signup_url }}">Создать аккаунт</a>
 </form>
 
 {% endblock %}

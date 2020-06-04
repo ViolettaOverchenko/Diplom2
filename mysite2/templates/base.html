@@ -19,7 +19,7 @@
 
   <body >
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="">
+      <a class="navbar-brand" href="{% url 'home' %}">
         {% load static %}
         <img src="{% static 'analysis_material/images/logotip.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
         Анализ учебных материалов
@@ -30,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="">Расчёт совместимости</a>
+            <a class="nav-link" href="{% url 'calculation_compatibility' %}">Расчёт совместимости</a>
           </li>
           {% if user.is_authenticated %}
           <li class="nav-item">

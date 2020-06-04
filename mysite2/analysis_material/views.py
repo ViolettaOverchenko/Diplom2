@@ -3,10 +3,15 @@ from django.views.generic import View, ListView, DetailView
 
 from .models import Document
 
-class AnalysisMaterialViews(View):
+class HomeViews(View):
     """ Главная страница """
     def get(self, request):
         return render(request, "analysis_material/home.html")
+
+class AnalysisMaterialViews(View):
+    """ Страница для расчёта совместимости """
+    def get(self, request):
+        return render(request, "analysis_material/calculation_compatibility.html")
 
 class PersonalAccountViews(ListView):
     """ Личный кабинет: список документов, список анализов """

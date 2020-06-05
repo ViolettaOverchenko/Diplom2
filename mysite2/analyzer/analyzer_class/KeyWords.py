@@ -1,11 +1,17 @@
+import math
 import re
+from collections import Counter
+
 import pymorphy2
 import pandas  as pd
 from nltk.util import ngrams
+from rutermextract import TermExtractor
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 from nltk.corpus import stopwords
 from razdel import sentenize, tokenize
-from threading import Thread
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 from natasha import (
     Segmenter,
@@ -87,8 +93,8 @@ class KeyWords(object):
         filtered_words = [word for word in words if word not in stop_words]
         return filtered_words
 
-    def lemmaPymorphy(self, words):
-        morph = pymorphy2.MorphAnalyzer()
+    def lemmaPymorphy(self, morph, words):
+
         normal_words = []
         for word in words:
              p = morph.parse(word)[0]
@@ -164,32 +170,40 @@ class KeyWords(object):
         sentences_tokens = []
         sentences_pair_tokens = []
         all_pair_tokens = []
+        term_extractor = TermExtractor()
+        morph = pymorphy2.MorphAnalyzer()
         for sentence in sentences:
-            sentence_doc = self.init_doc(sentence)
-            sentence_ner = self.get_ner(sentence_doc)
-            clean_sentence = self.clean_text_from_ner(sentence, sentence_ner)
-            clean_sentence, sentence_abbr = self.get_abbr(clean_sentence)
-            sentences_abbr.append(sentence_abbr)
+            tokens = []
+            #sentence_doc = self.init_doc(sentence)
+            #sentence_ner = self.get_ner(sentence_doc)
+            #clean_sentence = self.clean_text_from_ner(sentence, sentence_ner)
+            clean_sentence, sentence_abbr = self.get_abbr(sentence)
+            #sentences_abbr.append(sentence_abbr)
             clean_sentence = self.cleanText(clean_sentence)
             sentence_token = self.tokenization(clean_sentence)
             sentence_token = self.delete_stop_words(sentence_token)
-            sentence_token = self.lemmaPymorphy(sentence_token)
-            sentence_ner = self.lemmaPymorphy(sentence_ner)
+            sentence_token = self.lemmaPymorphy(morph, sentence_token)
             sentence_token = self.delete_stop_words(sentence_token)
-            sentence_token = self.filter_noun_adfj(sentence_token)
-            sentence_pair_token = self.pair_words(sentence_token)
+            for term in term_extractor(' '.join(sentence_token)):
+                tokens.append(term.normalized)
+            sentences_tokens.append(tokens + sentence_abbr)
+            # sentence_token = self.lemmaPymorphy(sentence_token)
+            # sentence_ner = self.lemmaPymorphy(sentence_ner)
+            # sentence_token = self.delete_stop_words(sentence_token)
+            # sentence_token = self.filter_noun_adfj(sentence_token)
+            # sentence_pair_token = self.pair_words(sentence_token)
             # tokens.append(sentence_token)
-            sentence_token = ' '.join(sentence_token)
-            sentences_tokens.append(sentence_token)
-            sentences_pair_tokens.append(sentence_pair_token)
-            all_pair_tokens += sentence_pair_token
+            #sentence_token = ' '.join(sentence_token)
+            #sentences_tokens.append(sentence_token)
+            #sentences_pair_tokens.append(sentence_pair_token)
+            #all_pair_tokens += sentence_pair_token
             # clean_sentences.append(clean_sentence)
-            name_entities.append(' '.join(sentence_ner + sentence_abbr))
+            #name_entities.append(' '.join(sentence_ner + sentence_abbr))
 
-        pair = self.get_pair(all_pair_tokens)
-        sentences_pair_tokens = self.clear_pair(sentences_pair_tokens, pair)
-        sentences_tokens = self.sum_all_tokens(name_entities,sentences_pair_tokens, sentences_tokens)
-        keys,values = self.TFIDF(sentences_tokens)
+        #pair = self.get_pair(all_pair_tokens)
+        #sentences_pair_tokens = self.clear_pair(sentences_pair_tokens, pair)
+        #sentences_tokens = self.sum_all_tokens(name_entities,sentences_pair_tokens, sentences_tokens)
+        keys,values = self.compute_tfidf(sentences_tokens)
         return keys, values
 
     def get_key_words(self, text):
@@ -198,6 +212,64 @@ class KeyWords(object):
         return keys, data
 
 
+
+
+
+    def compute_tf(self, text):
+        tf_text = Counter(text)
+        for i in tf_text:
+            tf_text[i] = tf_text[i] / float(len(text))
+
+        return tf_text
+
+
+    def compute_idf(self, word, corpus):
+        return math.log10(len(corpus) / sum([1.0 for i in corpus if word in i]))
+
+    def compute_tfidf(self, corpus):
+        documents_list = []
+        for text in corpus:
+            tf_idf_dictionary = {}
+            computed_tf = self.compute_tf(text)
+
+            for word in computed_tf:
+                tf_idf_dictionary[word] = computed_tf[word] * self.compute_idf(word, corpus)
+            documents_list.append(tf_idf_dictionary)
+        return self.sum_tf(documents_list)
+
+    def sum_tf(self, dicts):
+        resultdict = {}  # результирующий словарь
+
+        for dictionary in dicts:  # пробегаем по списку словарей
+            for key in dictionary:  # пробегаем по ключам словаря
+                try:
+                    resultdict[key] += dictionary[key]  # складываем значения
+                except KeyError:  # если ключа еще нет - создаем
+                    resultdict[key] = dictionary[key]
+
+        print(resultdict)
+        keys = []
+        values = []
+
+
+        s = [(k, resultdict[k]) for k in sorted(resultdict, key=resultdict.get, reverse=True)]
+        for k, v in s:
+            values.append(round(v,4))
+            keys.append(k)
+        # for i in sorted(resultdict.values()):
+        #     values.append(i)
+        #     keys.append(resultdict.get)
+        #return  resultdict.keys(), resultdict.values()
+        self.graphik(keys,values)
+        return keys, values
+
+    def graphik(self, keys, values):
+        lag = 1
+        x = np.arange(0, len(keys), lag)
+        y = values
+        fig = plt.figure()
+        plt.plot(x, y)
+        plt.show()
 
 
 

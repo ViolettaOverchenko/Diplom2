@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+{% include "base.html" %}
+
+{% block content %}
+
+
+<section class="ftco-section ftco-no-pt">
+    <div class="container">
+        <div class="row">
+            <div class="text pb-4 pt-5">
+                <h1 class="mb-4">Результаты анализа</h1>
+                <div class="desc">
+                    <p>Данный анализ показывает насколько совпадают тезарусы данных материалов.</p>
+                    <h4 class="mb-4">Совпадение: {{ result }}%</h4>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="heading-section mb-4 ml-md-4 pl-md-5">
+                    <h5 class="mb-4">Наименование материала: {{ one_material_name }}</h5>
+                    <h5 class="mb-4">
+                        Тезаурус
+                    </h5>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Элемент</th>
+                            <th scope="col">TF-IDF</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                       {% for key, value in one_data %}
+                        <tr>
+                            <th scope="row" class="table-fragment">1</th>
+                            <td class="table-fragment">{{ key }}</td>
+                            <td class="table-fragment">{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6 ">
+                <div class="heading-section mb-4 ml-md-4 pl-md-5">
+                    <h5 class="mb-4">Наименование материала: {{ two_material_name }}</h5>
+                    <h5 class="mb-4">
+                        Тезаурус
+                    </h5>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Элемент</th>
+                            <th scope="col">TF-IDF</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, value in two_data %}
+                        <tr>
+                            <th scope="row" class="table-fragment">1</th>
+                            <td class="table-fragment">{{ key }}</td>
+                            <td class="table-fragment">{{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
+{% endblock  %}

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 import unicodedata
 from subprocess import Popen, PIPE
 import docx
-from web_service_analyzer import settings
+from mysite2 import settings
 
 class ReadFile(object):
     def __init__(self):

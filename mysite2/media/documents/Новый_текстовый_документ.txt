@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Личный кабинет: {{ user.get_username }}</h1>
+    <ul class="nav nav-tabs" id="tab-example" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="first-tab" data-toggle="tab"
+               href="#first-tab-content" role="tab" aria-controls="first-tab-content"
+               aria-selected="true">Загруженные файлы</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="second-tab" data-toggle="tab"
+               href="#second-tab-content" role="tab" aria-controls="second-tab-content"
+               aria-selected="false">Результаты анализа</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="tab-content-example">
+        <div class="tab-pane fade show active" id="first-tab-content" role="tabpanel"
+             aria-labelledby="first-tab">
+             {% if document_list %}
+               <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                 <table class="table table-bordered table-striped table-hover">
+                   <tbody>
+                     {% for document in document_list %}
+                     <tr>
+                       <td><a href="{% url 'document_detail' document.pk %}" class="stretched-link">{{document.name_document}}</a></td>
+                       <td width="15px">
+                         <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                       </td>
+                     </tr>
+                     {% endfor %}
+                   </tbody>
+                 </table>
+               </div>
+               <p>Для загрузки файлов для анализа нажмите
+               <a href="#">сюда.</a></p>
+               {% else %}
+                 <p>Для загрузки файлов для анализа нажмите
+                 <a href="#">сюда.</a></p>
+               {% endif %}
+        </div>
+        <div class="tab-pane fade" id="second-tab-content" role="tabpanel"
+             aria-labelledby="second-tab">
+             {% if document_list %}
+               <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                 <table class="table table-bordered table-striped table-hover">
+                   <thead>
+                    <tr>
+                      <th scope="col">Первый материал</th>
+                      <th scope="col">Второй материал</th>
+                      <th scope="col">Совместимость</th>
+                      <th scope="col"></th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                     {% for document in document_list %}
+                     <tr>
+                       <td>{{document.name_document}}</td>
+                       <td>{{document.name_document}}</td>
+                       <td>75%</td>
+                       <td width="15px">
+                         <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                       </td>
+                     </tr>
+                     {% endfor %}
+                   </tbody>
+                 </table>
+               </div>
+               <p>Для проведения анализа нажмите
+               <a href="#">сюда.</a></p>
+               {% else %}
+                 <p>Для проведения анализа нажмите
+                 <a href="#">сюда.</a></p>
+               {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

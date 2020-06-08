@@ -2,12 +2,32 @@
 
 {% block content %}
   {% load static %}
-  <div class="container text-center">
-    {{document.name_document}}
-
-    {% for theme in document.theme_set.all %}
-      {{theme.name_theme}}
-    {% endfor %}
+  <div class="container">
+    <h1>{{document.name_document}}</h1>
+    <div class="text-right">
+      <form method="post" action="{% url 'delete' document.pk %}">
+        {% csrf_token %}
+        <button type="submit">
+              <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+         </button>
+      </form>
+    </div>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Ключевое слово</th>
+          <th scope="col">Частота</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for keyword in document.keyword_set.all %}
+          <tr>
+            <td>{{keyword.description_keyword}}</td>
+            <td>{{keyword.periodicity_keyword}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
 {% endblock %}

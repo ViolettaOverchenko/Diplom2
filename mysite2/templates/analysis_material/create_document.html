@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load static %}
+  <div class="container">
+    <h1>Добавление нового учебного материала</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input id="userID" type="text" name="user_id" value="{{ document.user_id_set }}">
+      <div class="form-group">
+        <label for="nameDocument"><h4>Введите название учебного материала:</h4></label>
+        <input type="text" class="form-control" id="nameDocument" name="name_document" required>
+      </div>
+      <div class="form-group" >
+        <label for="exampleFormControlFile1">Прикрепите файл для анализа (dox, docx):</label>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="path_file">
+      </div>
+      <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Вставьте текст для анализа" rows="15" name="one_text_for_analize" ></textarea><br>
+      <button type="submit">Добавить и анализировать</button>
+    </form>
+  </div>
+
+{% endblock %}

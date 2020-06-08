@@ -26,9 +26,14 @@
                    <tbody>
                      {% for document in document_list %}
                      <tr>
-                       <td><a href="{{ document.get_absolute_url }}" class="stretched-link">{{document.name_document}}</a></td>
+                       <td><a href="{{ document.get_absolute_url }}">{{document.name_document}}</a></td>
                        <td width="15px">
-                         <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                         <form method="post" action="{% url 'deleteDocument' document.pk %}">
+                           {% csrf_token %}
+                           <button type="submit">
+                                 <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                            </button>
+                         </form>
                        </td>
                      </tr>
                      {% endfor %}
@@ -36,7 +41,7 @@
                  </table>
                </div>
                <p>Для загрузки файлов для анализа нажмите
-               <a href="#">сюда.</a></p>
+               <a href="{% url 'create_document' %}">сюда.</a></p>
                {% else %}
                  <p>Для загрузки файлов для анализа нажмите
                  <a href="#">сюда.</a></p>

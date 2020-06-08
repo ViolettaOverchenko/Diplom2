@@ -1,10 +1,11 @@
-from django.shortcuts import render
-from django.views.generic import View, ListView, DetailView
+from django.shortcuts import render, redirect
+from django.views.generic import View, ListView, DetailView, CreateView
 from analyzer.analyzer_class.KeyWords import KeyWords
 from analyzer.analyzer_class.ReadFile import ReadFile
 from analyzer.analyzer_class.CompatibilityAnalysis import CompatibilityAnalysis
-
+from .forms import DocumentForm
 from .models import Document
+from django.urls import reverse_lazy
 
 class HomeViews(View):
     """ Главная страница """
@@ -24,17 +25,35 @@ class PersonalAccountViews(ListView):
     def get_queryset(self):
         return Document.objects.filter(user=self.request.user)
 
-    """def get(self, request):
-        documents = Document.objects.all()
-        return render(request, "analysis_material/personal_account.html", {"document_list": documents})"""
-
 class DocumentDetailViews(DetailView):
     """ Подробная информация о документе """
     model = Document
-    slug_field = "slug"
-    """def get(self, request, slug):
-        document = Document.objects.get(slug = slug)
-        return render(request, "analysis_material/document_detail.html", {"document": document})"""
+    template_name = 'analysis_material/document_detail.html'
+
+class CreateDocumentView(CreateView): # новый
+    model = Document
+    form_class = DocumentForm
+    template_name = 'analysis_material/create_document.html'
+    success_url = reverse_lazy('personal_account')
+
+def createDocument(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('personal_account')
+    form = DocumentForm()
+
+    return render(request,'analysis_material/create_document.html',{'form': form})
+
+def deleteDocument(request, pk, template_name='analysis_material/personal_account.html'):
+    document = Document.objects.get(pk=pk)
+    #document = get_object_or_404(Document, pk=pk)
+    if request.method=='POST':
+        document.delete()
+        return redirect('personal_account')
+    return render(request, template_name)
+
 
 def result_analize_two(request):
     # проверка чтобы либо текст либо файл

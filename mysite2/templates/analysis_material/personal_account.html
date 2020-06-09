@@ -28,7 +28,7 @@
                      <tr>
                        <td><a href="{{ document.get_absolute_url }}">{{document.name_document}}</a></td>
                        <td width="15px">
-                         <form method="post" action="{% url 'deleteDocument' document.pk %}">
+                         <form method="post" action="{% url 'document_delete' document.pk  %}">
                            {% csrf_token %}
                            <button type="submit">
                                  <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
@@ -41,7 +41,7 @@
                  </table>
                </div>
                <p>Для загрузки файлов для анализа нажмите
-               <a href="{% url 'create_document' %}">сюда.</a></p>
+               <a href="{% url 'document_new' %}">сюда.</a></p>
                {% else %}
                  <p>Для загрузки файлов для анализа нажмите
                  <a href="#">сюда.</a></p>

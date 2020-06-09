@@ -7,6 +7,7 @@ urlpatterns = [
     path('result_analize_two/', views.result_analize_two, name="result_analize_two"),
     path('personal_account/', views.PersonalAccountViews.as_view(), name="personal_account"),
     path('<int:pk>/', views.DocumentDetailViews.as_view(), name="document_detail"),
-    path('create_document/', views.CreateDocumentView.as_view(), name='create_document'),
-    path('delete/<int:pk>/', views.deleteDocument, name='deleteDocument'),
+    path('delete/<int:pk>/', views.DocumentDeleteView.as_view(), name='document_delete'),
+    #path('delete/<int:pk>/', views.deleteDocument, name='deleteDocument'),
+    path('new/', views.DocumentCreateView.as_view(), name='document_new'), # new
 ]

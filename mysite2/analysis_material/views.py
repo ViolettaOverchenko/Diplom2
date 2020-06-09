@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View, ListView, DetailView, CreateView
+from django.views.generic import View, ListView, DetailView, CreateView, DeleteView
 from analyzer.analyzer_class.KeyWords import KeyWords
 from analyzer.analyzer_class.ReadFile import ReadFile
 from analyzer.analyzer_class.CompatibilityAnalysis import CompatibilityAnalysis
-from .forms import DocumentForm
-from .models import Document
+from .models import Document, User
 from django.urls import reverse_lazy
+from .forms import DocumentForm
 
 class HomeViews(View):
     """ Главная страница """
@@ -30,29 +30,24 @@ class DocumentDetailViews(DetailView):
     model = Document
     template_name = 'analysis_material/document_detail.html'
 
-class CreateDocumentView(CreateView): # новый
+class DocumentCreateView(CreateView):
+    """ Добавление документа """
     model = Document
     form_class = DocumentForm
-    template_name = 'analysis_material/create_document.html'
+    template_name = 'analysis_material/document_form.html'
+
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(DocumentCreateView, self).form_valid(form)
+
+
+class DocumentDeleteView(DeleteView):
+    """ Удаление документа """
+    model = Document
+    template_name = 'analysis_material/personal_account.html'
     success_url = reverse_lazy('personal_account')
 
-def createDocument(request):
-    if request.method == 'POST':
-        form = DocumentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('personal_account')
-    form = DocumentForm()
-
-    return render(request,'analysis_material/create_document.html',{'form': form})
-
-def deleteDocument(request, pk, template_name='analysis_material/personal_account.html'):
-    document = Document.objects.get(pk=pk)
-    #document = get_object_or_404(Document, pk=pk)
-    if request.method=='POST':
-        document.delete()
-        return redirect('personal_account')
-    return render(request, template_name)
 
 
 def result_analize_two(request):

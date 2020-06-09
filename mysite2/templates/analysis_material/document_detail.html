@@ -5,7 +5,7 @@
   <div class="container">
     <h1>{{document.name_document}}</h1>
     <div class="text-right">
-      <form method="post" action="{% url 'delete' document.pk %}">
+      <form method="post" action="{% url 'document_delete' document.pk  %}">
         {% csrf_token %}
         <button type="submit">
               <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">

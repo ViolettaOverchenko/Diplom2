@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View, ListView, DetailView, CreateView, DeleteView
-from analyzer.analyzer_class.KeyWords import KeyWords
-from analyzer.analyzer_class.ReadFile import ReadFile
-from analyzer.analyzer_class.CompatibilityAnalysis import CompatibilityAnalysis
+from analyzer.analyzer_class.read_file import ReadFile
+from analyzer.analyzer_class.compatibility_analysis import CompatibilityAnalysis
+from analyzer.analyzer_class.thesaurus import Thesaurus
 from .models import Document, User
 from django.urls import reverse_lazy
 from .forms import DocumentForm
@@ -30,6 +30,12 @@ class DocumentDetailViews(DetailView):
     model = Document
     template_name = 'analysis_material/document_detail.html'
 
+class DocumentDeleteView(DeleteView):
+    """ Удаление документа """
+    model = Document
+    template_name = 'analysis_material/personal_account.html'
+    success_url = reverse_lazy('personal_account')
+
 class DocumentCreateView(CreateView):
     """ Добавление документа """
     model = Document
@@ -41,56 +47,58 @@ class DocumentCreateView(CreateView):
         form.instance.user = self.request.user
         return super(DocumentCreateView, self).form_valid(form)
 
+def result_analize_one(request):
+    # проверка чтобы либо текст либо файл
+    # если файл не того формата тоже првоерка
+    name_document = ""
+    one_text_area = ""
+    path_file = None
+    read_file = ReadFile()
 
-class DocumentDeleteView(DeleteView):
-    """ Удаление документа """
-    model = Document
-    template_name = 'analysis_material/personal_account.html'
-    success_url = reverse_lazy('personal_account')
+    if 'name_document' in request.POST and request.POST['name_document']:
+        name_document = request.POST['name_document']
+    if 'one_text_area' in request.POST and request.POST['one_text_area']:
+        one_text_area = request.POST['one_text_area']
+    if 'path_file' in request.FILES and request.FILES['path_file']:
+        path_file = request.FILES['path_file']
+        path_file = read_file(path_file)
 
-
-
+    thesaurus = Thesaurus()
+    keys, tfidf = thesaurus(path_file)
+    return render(request,
+                  'analysis_material/results_one.html', context={'name_document': name_document,
+                                                    'keys': keys,
+                                                    'tfidf': tfidf})
 def result_analize_two(request):
     # проверка чтобы либо текст либо файл
     # если файл не того формата тоже првоерка
     one_material_name = ""
     two_material_name = ""
-    one_text_for_analize = ""
-    two_text_for_analize = ""
+    one_text_area = ""
+    two_text_area = ""
     one_uploaded_file = None
     two_uploaded_file = None
     read_file = ReadFile()
 
-    if 'one_material_name' in request.GET and request.GET['one_material_name']:
-        one_material_name = request.GET['one_material_name']
-    if 'two_material_name' in request.GET and request.GET['two_material_name']:
-        two_material_name = request.GET['two_material_name']
-    if 'one_text_for_analize' in request.GET and request.GET['one_text_for_analize']:
-        one_text_for_analize = request.GET['one_text_for_analize']
-    if 'two_text_for_analize' in request.GET and request.GET['two_text_for_analize']:
-        two_text_for_analize = request.GET['two_text_for_analize']
+    if 'one_material_name' in request.POST and request.POST['one_material_name']:
+        one_material_name = request.POST['one_material_name']
+    if 'one_text_area' in request.POST and request.POST['one_text_area']:
+        one_text_area = request.POST['one_text_area']
     if 'one_uploaded_file' in request.FILES and request.FILES['one_uploaded_file']:
         one_uploaded_file = request.FILES['one_uploaded_file']
-        one_uploaded_file = read_file.ReadFile(one_uploaded_file)
+        one_uploaded_file = read_file(one_uploaded_file)
+
+    if 'two_material_name' in request.POST and request.POST['two_material_name']:
+        two_material_name = request.POST['two_material_name']
+    if 'two_text_area' in request.POST and request.POST['two_text_area']:
+        two_text_area = request.POST['two_text_area']
     if 'two_uploaded_file' in request.FILES and request.FILES['two_uploaded_file']:
         two_uploaded_file = request.FILES['two_uploaded_file']
-        two_uploaded_file = read_file.ReadFile(two_uploaded_file)
+        two_uploaded_file = read_file(two_uploaded_file)
 
-
-    key_words = KeyWords()
-
-    if one_uploaded_file is not None:
-        one_data_keys, one_data = key_words.get_key_words(text=one_uploaded_file)
-    else:
-        one_data_keys, one_data = key_words.get_key_words(text=one_text_for_analize)
-
-    if two_uploaded_file is not None:
-        two_data_keys, two_data = key_words.get_key_words(text=two_uploaded_file)
-    else:
-        two_data_keys, two_data = key_words.get_key_words(text=two_text_for_analize)
-
-    analisis = CompatibilityAnalysis()
-    result = analisis.analyze(one_data_keys, two_data_keys)
+    compatibility_analysis = CompatibilityAnalysis()
+    one_data, two_data, result = compatibility_analysis(one_text_area, two_text_area,
+                                                                   one_uploaded_file, two_uploaded_file)
     return render(request,
                   'analysis_material/results_two.html', context={'one_material_name': one_material_name,
                                                     'two_material_name': two_material_name,

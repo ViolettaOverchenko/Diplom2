@@ -1,0 +1,42 @@
+
+{% include "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+  <h1>Результаты анализа</h1>
+  <h5>Наименование материала: {{ name_document }}</h5>
+  <h5>Тезаурус</h5>
+  <form method="GET" action="{% url 'personal_account' %}" enctype ="multipart/form-data" class="search-property" >
+    {% csrf_token %}
+    <input type="submit" value="Добавить в библиотеку" class="form-control btn btn-primary"/>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Ключевое слово</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key in keys %}
+          <tr>
+            <td width="10px">
+              <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck" checked>
+                  <label class="custom-control-label" for="customCheck"></label>
+              </div>
+            </td>
+            <td>{{ key }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </form>
+
+
+</div>
+
+{% endblock  %}

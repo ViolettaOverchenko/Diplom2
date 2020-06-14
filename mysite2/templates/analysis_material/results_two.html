@@ -23,17 +23,15 @@
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col">№</th>
-                            <th scope="col">Элемент</th>
-                            <th scope="col">TF-IDF</th>
+                            <th scope="col"></th>
+                            <th scope="col">Ключевое слово</th>
                         </tr>
                         </thead>
                         <tbody>
-                       {% for key, value in one_data %}
+                        {% for key, value in one_data %}
                         <tr>
-                            <th scope="row" class="table-fragment">1</th>
+                            <th scope="row" class="table-fragment"><input type="checkbox" checked></th>
                             <td class="table-fragment">{{ key }}</td>
-                            <td class="table-fragment">{{ value }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -49,17 +47,15 @@
                     <table class="table table-bordered table-hover">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col">№</th>
-                            <th scope="col">Элемент</th>
-                            <th scope="col">TF-IDF</th>
+                            <th scope="col"></th>
+                            <th scope="col">Ключевое слово</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for key, value in two_data %}
                         <tr>
-                            <th scope="row" class="table-fragment">1</th>
+                            <th scope="row" class="table-fragment"><input type="checkbox" checked></th>
                             <td class="table-fragment">{{ key }}</td>
-                            <td class="table-fragment">{{ value }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>

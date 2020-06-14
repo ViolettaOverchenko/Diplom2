@@ -21,57 +21,5 @@
     <input type="submit" value="Добавить" class="form-control btn btn-secondary btn-block"/>
   </form>
 </div>
-<!--
-    <div class="container border border-secondary rounded mycol-sm-6">
-      <div class="form-group">
-        <label for="nameDocument"><h4>Введите название учебного материала:</h4></label>
-        <input type="text" class="form-control" id="nameDocument" name="name_document" required>
-      </div>
-      <div class="form-group" >
-        <label for="exampleFormControlFile1">Прикрепите файл для анализа (dox, docx):</label>
-        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="two_uploaded_file">
-      </div>
-      <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Вставьте текст для анализа" rows="15" name="one_text_for_analize" ></textarea><br>
-      <div class="container text-center">
-        <div>
-          <p id="first2" onclick="first2()">Показать ключевые слова</p>
-          <p id="first_yelloy2"; style="display:none" onclick="first_yelloy2()">Скрыть ключевые слова</p>
-          <div id="second_hide2" style="display:none">
-            <div class="table-wrapper-scroll-y my-custom-scrollbar">
-              <table class="table table-bordered table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Ключевое слово</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td width="10px">
-                      <div class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" id="customCheck3" checked>
-                          <label class="custom-control-label" for="customCheck3"></label>
-                      </div>
-                    </td>
-                    <td>Ключевое слово</td>
-                    <td width="15px">
-                      {% load static %}
-                      <img src="{% static 'analysis/images/update.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-        <!--<div class="spinner-border" role="status">
-          <span class="sr-only">Выполняется анализ. Пожалуйста, подождите...</span>
-        </div>
-    </div>
-
--->
-
 
 {% endblock content %}

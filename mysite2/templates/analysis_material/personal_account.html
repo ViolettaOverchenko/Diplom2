@@ -44,7 +44,7 @@
                <a href="{% url 'document_new' %}">сюда.</a></p>
                {% else %}
                  <p>Для загрузки файлов для анализа нажмите
-                 <a href="#">сюда.</a></p>
+                 <a href="{% url 'document_new' %}">сюда.</a></p>
                {% endif %}
         </div>
         <div class="tab-pane fade" id="second-tab-content" role="tabpanel"
@@ -75,10 +75,10 @@
                  </table>
                </div>
                <p>Для проведения анализа нажмите
-               <a href="#">сюда.</a></p>
+               <a href="{% url 'calculation_compatibility' %}">сюда.</a></p>
                {% else %}
                  <p>Для проведения анализа нажмите
-                 <a href="#">сюда.</a></p>
+                 <a href="{% url 'calculation_compatibility' %}">сюда.</a></p>
                {% endif %}
         </div>
     </div>

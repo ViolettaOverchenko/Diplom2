@@ -1,5 +1,4 @@
 from django.db import models
-from autoslug import AutoSlugField
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -7,8 +6,7 @@ class Document(models.Model):
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.SET_NULL, null=True, blank=True)
     name_document = models.CharField("Учебный материал", max_length=200)
     path_file = models.FileField("Файл", upload_to='documents/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    #slug = AutoSlugField(populate_from='name_document')
+    uploaded_at = models.DateTimeField("Время загрузки", auto_now_add=True)
 
     def __str__(self):
         return self.name_document

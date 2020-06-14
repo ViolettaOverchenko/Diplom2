@@ -21,6 +21,7 @@ class PersonalAccountViews(ListView):
     """ Личный кабинет: список документов, список анализов """
     model = Document
     template_name = "analysis_material/personal_account.html"
+    paginate_by = 10
 
     def get_queryset(self):
         return Document.objects.filter(user=self.request.user)

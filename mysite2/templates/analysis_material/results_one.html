@@ -8,12 +8,15 @@
   <h1>Результаты анализа</h1>
   <div class="row">
     <div class="col-6 text-left">
-      <h5>Наименование материала: {{ name_document }}</h5>
+      <h4>Наименование материала: {{ name_document }}</h4>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button" class="btn btn-info" id="add_in_biblio">Добавить в библиотеку</button>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-6 text-left">
+    <div class="col-4">
       <div class="input-group mb-3">
          <div class="input-group-prepend">
            <span class="input-group-text" id="inputGroup-sizing-default"><img src="{% static 'analysis_material/images/search.png' %}" width="23" height="23" class="d-inline-block align-top" alt="" loading="lazy">
@@ -21,13 +24,43 @@
          </div>
          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
        </div>
+      <div class="card">
+        <div class="card-header">
+          <h6>Слова</h6>
+        </div>
+        <div class="card-body">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Предметный тезаурус
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Слова-кандидаты
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+              Все слова
+            </label>
+          </div>
+        </div>
+        <!--<div class="card-header">
+          <h6>Сортировать</h6>
+        </div>
+        <div class="card-body">
+          <input type="checkbox" name="option1" value="a1">  Алфавиту <Br>
+          <input type="checkbox" name="option2" value="a2">  Значимости слова <Br>
+          <input type="checkbox" name="option3" value="a3">  Частоте слова <Br>
+        </div>-->
+        <button type="button" class="btn btn-info" id="filtres">Показать</button>
+      </div>
     </div>
-    <div class="col-6 text-right">
-      <button type="button" class="btn btn-info" id="add_analysis">Добавить в библиотеку</button>
-    </div>
-  </div>
 
-  <div class="row">
+
     <div class="col-8">
       <form method="GET" action="{% url 'personal_account' %}" enctype ="multipart/form-data" class="search-property" >
         {% csrf_token %}
@@ -53,34 +86,6 @@
       </form>
     </div>
   </div>
-
-
-
-    <div class="col-4">
-      <h3>Фильтры</h3>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-        <label class="form-check-label" for="defaultCheck1">
-          Показать только слова предметного тезауруса
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-        <label class="form-check-label" for="defaultCheck1">
-          Показать только слова-кандидаты в предметный тезаурус
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-        <label class="form-check-label" for="defaultCheck1">
-          Показать все слова
-        </label>
-      </div>
-      <button type="button" class="btn btn-info" id="filtres">Применить</button>
-    </div>
-
-
-
 
 
 </div>

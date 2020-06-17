@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;800&display=swap');
 html {
   position: relative;
   min-height: 100%;
@@ -7,7 +8,7 @@ body {
   margin-bottom: 60px;
   background-color: #f7f7f7;
 }
-
+p {font-family:'Dosis', sans-serif; }
 .footer {
   position: absolute;
   bottom: 0;
@@ -26,7 +27,7 @@ h1 {
   margin-right: 10px;
 }
 
-#add_doc, #delete_doc, #add_analysis, #delete_analysis {
+#add_doc, #delete_doc, #add_analysis, #delete_analysis, #filtr {
   margin-top: 30px;
 }
 

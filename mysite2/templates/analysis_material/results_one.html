@@ -6,35 +6,81 @@
 
 <div class="container">
   <h1>Результаты анализа</h1>
-  <h5>Наименование материала: {{ name_document }}</h5>
-  <h5>Тезаурус</h5>
-  <form method="GET" action="{% url 'personal_account' %}" enctype ="multipart/form-data" class="search-property" >
-    {% csrf_token %}
-    <input type="submit" value="Добавить в библиотеку" class="form-control btn btn-primary"/>
-    <div class="table-wrapper-scroll-y my-custom-scrollbar">
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">Ключевое слово</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for key in keys %}
-          <tr>
-            <td width="10px">
-              <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck" checked>
-                  <label class="custom-control-label" for="customCheck"></label>
-              </div>
-            </td>
-            <td>{{ key }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div class="row">
+    <div class="col-6 text-left">
+      <h5>Наименование материала: {{ name_document }}</h5>
     </div>
-  </form>
+  </div>
+
+  <div class="row">
+    <div class="col-6 text-left">
+      <div class="input-group mb-3">
+         <div class="input-group-prepend">
+           <span class="input-group-text" id="inputGroup-sizing-default"><img src="{% static 'analysis_material/images/search.png' %}" width="23" height="23" class="d-inline-block align-top" alt="" loading="lazy">
+       </span>
+         </div>
+         <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+       </div>
+    </div>
+    <div class="col-6 text-right">
+      <button type="button" class="btn btn-info" id="add_analysis">Добавить в библиотеку</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-8">
+      <form method="GET" action="{% url 'personal_account' %}" enctype ="multipart/form-data" class="search-property" >
+        {% csrf_token %}
+
+        <div class="table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table table-bordered table-striped table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="row" class="table-fragment"><input type="checkbox" checked></th>
+                <th scope="col">Слово</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for key in keys %}
+              <tr>
+                <th scope="row" class="table-fragment"><input type="checkbox" checked></th>
+                <td>{{ key }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+    <div class="col-4">
+      <h3>Фильтры</h3>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Показать только слова предметного тезауруса
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Показать только слова-кандидаты в предметный тезаурус
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+        <label class="form-check-label" for="defaultCheck1">
+          Показать все слова
+        </label>
+      </div>
+      <button type="button" class="btn btn-info" id="filtres">Применить</button>
+    </div>
+
+
+
 
 
 </div>

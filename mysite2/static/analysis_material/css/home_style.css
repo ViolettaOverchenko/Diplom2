@@ -2,8 +2,8 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
-  /* Нижний край поля по высоте нижнего колонтитула (высота футера)*/
   margin-bottom: 60px;
   background-color: #f7f7f7;
 }
@@ -12,9 +12,8 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Устанавливаем фиксированную высоту футера */
   height: 60px;
-  line-height: 60px; /* Вертикально центрируем текст футера */
+  line-height: 60px;
   background-color: #333333;
   text-align: center;
 }
@@ -27,13 +26,13 @@ h1 {
   margin-right: 10px;
 }
 
-.table {
-  margin-top: 50px;
+#add_doc, #delete_doc, #add_analysis, #delete_analysis {
+  margin-top: 30px;
 }
 
-/*
- * Cover
- */
+.table, .input-group, .pagination{
+  margin-top: 30px;
+}
 .cover {
   padding: 0 1.5rem;
 }
@@ -69,41 +68,35 @@ input[type="submit"] {
   margin-top: 10px;
 }
 
-p#first {
-cursor: pointer;
-line-height: 13px;
-text-indent: 22px;
-line-height: 33px;
-border: 1px solid #d2d2d2;
-font-size: 18px;
+#myInput {
+  background-image: url('/css/searchicon.png'); /* Добавить значок поиска для ввода */
+  background-position: 10px 12px; /* Расположите значок поиска */
+  background-repeat: no-repeat; /* Не повторяйте изображение значка */
+  width: 100%; /* Полная ширина */
+  font-size: 16px; /* Увеличить размер шрифта */
+  padding: 12px 20px 12px 40px; /* Добавить немного отступов */
+  border: 1px solid #ddd; /* Добавить серую границу */
+  margin-bottom: 12px; /* Добавить некоторое пространство под входом */
 }
 
-p#first_yelloy {
-cursor: pointer;
-font-size: 18px;
-text-indent: 22px;
-line-height: 33px;
-border: 1PX SOLID #d2d2d2;
+#myTable {
+  border-collapse: collapse; /* Свернуть границы */
+  width: 100%; /* Полная ширина */
+  border: 1px solid #ddd; /* Добавить серую границу */
+  font-size: 18px; /* Увеличить размер шрифта */
 }
 
-p#first2 {
-cursor: pointer;
-line-height: 13px;
-text-indent: 22px;
-line-height: 33px;
-border: 1px solid #d2d2d2;
-font-size: 18px;
+#myTable th, #myTable td {
+  text-align: left; /* Выравнивание текста по левому краю */
+  padding: 12px; /* Добавить отступ */
 }
 
-p#first_yelloy2 {
-cursor: pointer;
-font-size: 18px;
-text-indent: 22px;
-line-height: 33px;
-border: 1PX SOLID #d2d2d2;
+#myTable tr {
+  /* Добавить нижнюю границу для всех строк таблицы */
+  border-bottom: 1px solid #ddd;
 }
 
-#result {
-  margin-top: 20px;
-  margin-bottom: 50px;
+#myTable tr.header, #myTable tr:hover {
+  /* Добавить серый цвет фона для заголовка таблицы и при наведении курсора мыши */
+  background-color: #f1f1f1;
 }

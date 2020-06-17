@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-    <h1>Личный кабинет: {{ user.get_username }}</h1>
+    <h1>Пользователь: {{ user.get_username }}</h1>
     <ul class="nav nav-tabs" id="tab-example" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="first-tab" data-toggle="tab"
@@ -21,28 +21,59 @@
         <div class="tab-pane fade show active" id="first-tab-content" role="tabpanel"
              aria-labelledby="first-tab">
              {% if document_list %}
-               <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                 <table class="table table-bordered table-striped table-hover">
+             <div class="row">
+               <div class="col-6 text-left">
+                 <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default"><img src="{% static 'analysis_material/images/search.png' %}" width="23" height="23" class="d-inline-block align-top" alt="" loading="lazy">
+                  </span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                  </div>
+               </div>
+               <div class="col-6 text-right">
+                 <button type="button" class="btn btn-info" id="add_doc">Добавить</button>
+                 <button type="button" class="btn btn-secondary" id="delete_doc">Удалить</button>
+               </div>
+             </div>
+
+               <div class="table-wrapper-scroll-y my-custom-scrollbar ">
+                 <table class="table table-bordered table-striped table-hover display" id="example">
+                   <thead class="thead-dark">
+                     <tr>
+                       <th scope="col"><input type="checkbox"></th>
+                       <th scope="col">Наименование материала</th>
+                       <th scope="col">Дата загрузки</th>
+                     </tr>
+                   </thead>
                    <tbody>
                      {% for document in document_list %}
                      <tr>
+                       <th width="15px" scope="row" class="table-fragment"><input type="checkbox"></th>
                        <td><a href="{{ document.get_absolute_url }}">{{document.name_document}}</a></td>
-                       <td width="15px">
-                         <form method="post" action="{% url 'document_delete' document.pk  %}">
-                           {% csrf_token %}
-                           <button type="submit">
-                                 <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-                            </button>
-                         </form>
-                       </td>
+                       <td>{{document.uploaded_at}}</td>
                      </tr>
                      {% endfor %}
                    </tbody>
                  </table>
+                 <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Предыдущая</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-disabled="true">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-disabled="true">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-disabled="true">Следующая</a>
+                    </li>
+                  </ul>
+                </nav>
                </div>
-               <p>Для загрузки файлов для анализа нажмите
-               <a href="{% url 'document_new' %}">сюда.</a></p>
+               <!--<p>Для загрузки файлов для анализа нажмите
+               <a href="{% url 'document_new' %}">сюда.</a></p>-->
                {% else %}
+
                  <p>Для загрузки файлов для анализа нажмите
                  <a href="{% url 'document_new' %}">сюда.</a></p>
                {% endif %}
@@ -50,38 +81,86 @@
         <div class="tab-pane fade" id="second-tab-content" role="tabpanel"
              aria-labelledby="second-tab">
              {% if document_list %}
+             <div class="row">
+               <div class="col-6 text-left">
+                 <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default"><img src="{% static 'analysis_material/images/search.png' %}" width="23" height="23" class="d-inline-block align-top" alt="" loading="lazy">
+                  </span>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                  </div>
+               </div>
+               <div class="col-6 text-right">
+                 <button type="button" class="btn btn-info" id="add_analysis">Новый анализ</button>
+                 <button type="button" class="btn btn-secondary" id="delete_analysis">Удалить</button>
+               </div>
+             </div>
+
+             <div class="row">
+               <div class="col">
+                   <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01"><img src="{% static 'analysis_material/images/filter.png' %}" width="23" height="23" class="d-inline-block align-top" alt="" loading="lazy"></label>
+                      </div>
+                      <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Выберите тип совместимости...</option>
+                        <option value="1">Внутренняя</option>
+                        <option value="2">Внешняя</option>
+                        <option value="3">Все</option>
+                      </select>
+                    </div>
+               </div>
+             </div>
+
                <div class="table-wrapper-scroll-y my-custom-scrollbar">
                  <table class="table table-bordered table-striped table-hover">
-                   <thead>
+                   <thead class="thead-dark">
                     <tr>
+                      <th scope="col"><input type="checkbox"></th>
                       <th scope="col">Первый материал</th>
                       <th scope="col">Второй материал</th>
-                      <th scope="col">Совместимость</th>
+                      <th scope="col">Тип совместимости</th>
+                      <th scope="col">Процент совместимости</th>
                       <th scope="col"></th>
                     </tr>
                    </thead>
                    <tbody>
                      {% for document in document_list %}
                      <tr>
+                       <th width="15px" scope="row" class="table-fragment"><input type="checkbox"></th>
                        <td>{{document.name_document}}</td>
                        <td>{{document.name_document}}</td>
-                       <td>75%</td>
-                       <td width="15px">
-                         <img src="{% static 'analysis_material/images/delete.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-                       </td>
+                       <td>Внешняя</td>
+                       <td>7%</td>
+                       <td><button class="btn btn-secondary btn-block" type="button">Подробнее</button></td>
                      </tr>
                      {% endfor %}
                    </tbody>
                  </table>
+                 <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Предыдущая</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-disabled="true">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#" aria-disabled="true">3</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-disabled="true">Следующая</a>
+                    </li>
+                  </ul>
+                </nav>
                </div>
-               <p>Для проведения анализа нажмите
+               <!--<p>Для проведения анализа нажмите
                <a href="{% url 'calculation_compatibility' %}">сюда.</a></p>
                {% else %}
                  <p>Для проведения анализа нажмите
                  <a href="{% url 'calculation_compatibility' %}">сюда.</a></p>
-               {% endif %}
+               {% endif %}-->
         </div>
     </div>
 </div>
+
 
 {% endblock %}

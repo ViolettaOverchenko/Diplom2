@@ -1,79 +1,87 @@
- <!doctype html>
+<!doctype html>
 {% load static %}
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <head>
+   <!-- Required meta tags -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+   <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="shortcut icon" href="{% static 'analysis_material/images/favicon.png' %}" type="image/png">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
 
-    <link rel="stylesheet" type="text/css" href="{% static 'analysis_material/css/home_style.css' %}">
+   <link rel="shortcut icon" href="{% static 'analysis_material/images/favicon.png' %}" type="image/png">
 
-    <title>Анализ учебных материалов</title>
-  </head>
 
-  <body >
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url 'home' %}">
-        {% load static %}
-        <img src="{% static 'analysis_material/images/logotip.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-        Анализ учебных материалов
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'document_new' %}">Анализ одного материала</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'calculation_compatibility' %}">Расчёт совместимости двух материалов</a>
-          </li>
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'personal_account' %}">Личный кабинет</a>
-          </li>
-          {% endif %}
-        </ul>
-        <ul id="main-menu" class="navbar-nav ml-auto">
-          {% if user.is_authenticated %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ user.get_username }}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'account_logout' %}">Выход</a>
-              </div>
-            </li>
-          {% else %}
-            <li class="nav-item">
-              <a class="btn btn-secondary" id="btn_registration" href="{% url 'account_signup' %}" role="button">Регистрация</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-secondary" href="{% url 'account_login' %}" role="button">Вход</a>
-            </li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
-    {% block content %}
-    {% endblock %}
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Наши контакты: owerchenko.violetta@yandex.ru</span>
-      </div>
-    </footer>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script type="text/javascript" src={% static "analysis_material/js/analysis_material.js" %}></script>
-  </body>
+   <link rel="stylesheet" type="text/css" href="{% static 'analysis_material/css/home_style.css' %}">
+
+   <title>Анализ учебных материалов</title>
+ </head>
+
+ <body >
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+     <a class="navbar-brand" href="{% url 'home' %}">
+       {% load static %}
+       <img src="{% static 'analysis_material/images/logotip.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+       Анализ учебных материалов
+     </a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+       <ul class="navbar-nav">
+         <li class="nav-item">
+           <a class="nav-link" href="{% url 'document_new' %}">Анализ одного материала</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="{% url 'calculation_compatibility' %}">Расчёт совместимости двух материалов</a>
+         </li>
+         {% if user.is_authenticated %}
+         <li class="nav-item">
+           <a class="nav-link" href="{% url 'personal_account' %}">Личный кабинет</a>
+         </li>
+         {% endif %}
+       </ul>
+       <ul id="main-menu" class="navbar-nav ml-auto">
+         {% if user.is_authenticated %}
+           <li class="nav-item dropdown">
+             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               {{ user.get_username }}
+             </a>
+             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" href="{% url 'account_logout' %}">Выход</a>
+             </div>
+           </li>
+         {% else %}
+           <li class="nav-item">
+             <a class="btn btn-secondary" id="btn_registration" href="{% url 'account_signup' %}" role="button">Регистрация</a>
+           </li>
+           <li class="nav-item">
+             <a class="btn btn-secondary" href="{% url 'account_login' %}" role="button">Вход</a>
+           </li>
+         {% endif %}
+       </ul>
+     </div>
+   </nav>
+   {% block content %}
+   {% endblock %}
+   <footer class="footer">
+     <div class="container">
+       <span class="text-muted">Наши контакты: owerchenko.violetta@yandex.ru</span>
+     </div>
+   </footer>
+   <!-- Optional JavaScript -->
+   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+   <script src="{% static 'analysis_material/js/scripts.js' %}"></script>
+   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.21/i18n/Russian.json"></script>
+ </body>
 </html>

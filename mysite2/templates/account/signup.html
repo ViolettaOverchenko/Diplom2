@@ -1,11 +1,29 @@
 {% extends "account/base.html" %}
 
 {% load i18n %}
-
+{% load static %}
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-
+<!--
+<section class="about-section text-center" id="about">
+    <div class="container">
+      <div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+          <div class="col-lg-6"><img class="img-fluid" src="{% static 'analysis_material/images/demo-image-01.jpg' %}" alt="" /></div>
+          <div class="col-lg-6">
+              <div class="bg-black text-center h-100 project">
+                  <div class="d-flex h-100">
+                      <div class="project-text w-100 my-auto text-center text-lg-left">
+                          <h4 class="text-white">Анализ одного учебного материала</h4>
+                          <p class="mb-0 text-white-50">Данный анализ позволит вам просмотреть предметный тезаурус учебного материала</p>
+                          <a class="btn btn-primary js-scroll-trigger" href="{% url 'document_new' %}">Перейти</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</section>
 <h1 align="center">Регистрация</h1>
   <form class="form-signin text-center" method="post" action="{% url 'account_signup' %}">
     {% csrf_token %}
